@@ -1,12 +1,9 @@
-import React from 'react';
+import SearchBar from './components/SearchBar';
 
-function App() {
+export default function App() {
   return (
-    <div>
-      <h1>Algorithm Autocomplete Engine</h1>
-      <p>Project setup is complete.</p>
+    <div style={{ backgroundColor: "#121212", minHeight: "100vh", paddingTop: "80px" }}>
+      <SearchBar />
     </div>
   );
 }
-
-export default App;
