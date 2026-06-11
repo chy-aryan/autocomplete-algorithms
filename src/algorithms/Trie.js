@@ -1,8 +1,8 @@
-// A node represents a single letter in the tree
 class TrieNode {
   constructor() {
     this.children = {};
     this.isTerminal = false;
+    this.data = null;
   }
 }
 
@@ -11,7 +11,7 @@ export class Trie {
     this.root = new TrieNode();
   }
 
-  insert(word) {
+  insert(word, item) {
     let current = this.root;
     for (let i = 0; i < word.length; i++) {
       let char = word[i].toLowerCase();
@@ -21,17 +21,15 @@ export class Trie {
       current = current.children[char];
     }
     current.isTerminal = true;
+    current.data = item;
   }
 
-  // 2. Internal helper function 
-  _findWords(node, prefix, results) {
+  _findWords(node, results) {
     if (node.isTerminal) {
-      // Capitalize the first letter so it looks nice in the UI later
-      let formattedWord = prefix.charAt(0).toUpperCase() + prefix.slice(1);
-      results.push(formattedWord);
+      results.push(node.data);
     }
     for (let char in node.children) {
-      this._findWords(node.children[char], prefix + char, results);
+      this._findWords(node.children[char], results);
     }
   }
 
@@ -44,14 +42,13 @@ export class Trie {
     for (let i = 0; i < prefixLower.length; i++) {
       let char = prefixLower[i];
       if (!current.children[char]) {
-        return []; // If the letter branch doesn't exist, no cities match
+        return []; 
       }
       current = current.children[char];
     }
 
-    // If we successfully traced the prefix, gather all words branching below it
     let results = [];
-    this._findWords(current, prefixLower, results);
+    this._findWords(current, results);
     return results;
   }
 }
